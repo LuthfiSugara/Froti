@@ -86,7 +86,7 @@
                         <label for="konten">Konten</label>
                         <textarea class="form-control" name="konten" id="contentupload" rows="3"><?= $tumbuhan['konten']?></textarea>
                     </div>
-                    <button type="submit" name="ubahtumbuhan" class="btn btn-primary">Submit</button>
+                    <button type="submit" name="ubahtumbuhan" class="btn btn-success float-right">Submit</button>
                 </form>
                 </div>
             </div>

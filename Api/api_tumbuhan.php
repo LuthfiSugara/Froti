@@ -3,10 +3,10 @@
 	$pdo = new \PDO('mysql:host=' . $server . ';dbname=' . $dbname, $dbuser, $dbpass);
 	$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 	if(intval($_GET['id']) > 0) {
-		$query = $pdo->prepare('SELECT * FROM berita WHERE id_daerah = ?');
+		$query = $pdo->prepare('SELECT * FROM tumbuhan');
 		$query->execute(array($_GET['id']));
 	} else {
-		$query = $pdo->prepare('SELECT * FROM berita');
+		$query = $pdo->prepare('SELECT * FROM tumbuhan');
 		$query->execute();
 	}
 
