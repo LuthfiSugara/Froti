@@ -3,13 +3,15 @@
 
     $id = $_GET["id"];
 
-    if (isset($_POST["ubahdaerah"])) {
-        if (ubahDaerah($_POST) > 0 ) {
+    $tumbuhan = query("SELECT * FROM tumbuhan WHERE id = $id ")[0];
+
+    if (isset($_POST["ubahtumbuhan"])) {
+        if (ubahTumbuhan($_POST) > 0 ) {
             echo 
             "
                 <script>
                     alert('Data berhasil diubah!');
-                    document.location.href = 'daerah.php';
+                    document.location.href = 'index.php';
                 </script>
             ";
         }
@@ -18,15 +20,14 @@
             "
                 <script>
                     alert('Data berhasil diubah!');
-                    document.location.href = 'daerah.php';
+                    document.location.href = 'index.php';
                 </script>
             ";
         }
     }
 
-    $daerah = query("SELECT * FROM daerah ORDER BY id ASC");
-    $detail = query("SELECT * FROM daerah WHERE id = $id ")[0];
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -35,7 +36,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Historas</title>
+    <title>Froti</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="bootstrap/bootstrap.css">
@@ -54,15 +55,12 @@
         <!-- Sidebar Holder -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Historas</h3>
+                <h3>Froti</h3>
             </div>
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="index.php">Berita</a>
-                </li>
-                <li>
-                    <a href="daerah.php">Daerah</a>
+                    <a href="index.php">Tumbuhan</a>
                 </li>
             </ul>
         </nav>
@@ -70,15 +68,25 @@
         <!-- Page Content Holder -->
         <div id="content">
             <div class="card">
-                <h5 class="card-header">Edit Daerah</h5>
+                <h5 class="card-header">Edit Tumbuhan</h5>
                 <div class="card-body">
-                <form method="post" action="">
-                <input type="hidden" name="id" value="<?= $detail['id'] ?>">
+                <form method="post" action="" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<?= $tumbuhan["id"]; ?>">
                     <div class="form-group">
-                        <label for="daerah">Nama Daerah</label>
-                        <input type="text" name="daerah" value="<?= $detail['daerah']?>" class="form-control" id="daerah">
+                        <label for="judul">Judul</label>
+                        <input type="text" name="judul" value="<?= $tumbuhan['judul'] ?>" class="form-control" id="judul">
                     </div>
-                    <button type="submit" name="ubahdaerah" class="btn btn-primary">Submit</button>
+                    <div>
+                        <img src="images/<?= $tumbuhan['gambar'] ?>" width="250px" height="250px" alt="..." class="img-thumbnail">
+                    </div>
+                    <div class="custom-file mb-3 mt-3">
+                        <input type="file" name="gambar">
+                    </div>
+                    <div class="form-group">
+                        <label for="konten">Konten</label>
+                        <textarea class="form-control" name="konten" id="contentupload" rows="3"><?= $tumbuhan['konten']?></textarea>
+                    </div>
+                    <button type="submit" name="ubahtumbuhan" class="btn btn-primary">Submit</button>
                 </form>
                 </div>
             </div>
@@ -91,6 +99,8 @@
     <script src="bootstrap/popper.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="bootstrap/bootstrap.js"></script>
+    <!-- CkEditor -->
+    <script src="http://cdn.ckeditor.com/4.6.2/standard-all/ckeditor.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -98,6 +108,14 @@
                 $('#sidebar').toggleClass('active');
                 $(this).toggleClass('active');
             });
+        });
+
+        CKEDITOR.replace( 'contentupload', {
+
+        height: 300,
+
+        filebrowserUploadUrl: "upload.php"
+
         });
     </script>
 </body>

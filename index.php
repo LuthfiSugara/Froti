@@ -1,8 +1,8 @@
 <?php
     require 'functions.php';
 
-    if (isset($_POST["tambahberita"])) {
-        if (tambahBerita($_POST) > 0) {
+    if (isset($_POST["tambahtumbuhan"])) {
+        if (tambahTumbuhan($_POST) > 0) {
             echo "
                 <script>
                     alert('Data berhasil ditambahkan!');
@@ -21,9 +21,7 @@
         }
     }
 
-    $berita = query('SELECT berita.id, berita.judul, berita.penulis, berita.konten, berita.id_daerah, berita.gambar, daerah.daerah FROM berita LEFT JOIN daerah ON berita.id_daerah = daerah.id ORDER BY berita.id ASC');
-    
-    $daerah = query("SELECT * FROM daerah ORDER BY id ASC");
+    $tumbuhan = query('SELECT * FROM tumbuhan ORDER BY id ASC');
 
 ?>
 
@@ -59,42 +57,35 @@
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="index.php">Berita</a>
-                </li>
-                <li>
-                    <a href="daerah.php">Daerah</a>
+                    <a href="index.php">Tumbuhan</a>
                 </li>
             </ul>
         </nav>
 
         <!-- Page Content Holder -->
         <div id="content">
-            <button class="btn btn-sm btn-success float-right mb-2" data-toggle="modal" data-target="#exampleModal">Tambah Berita</button>
+            <button class="btn btn-sm btn-success float-right mb-2" data-toggle="modal" data-target="#exampleModal">Tambah Tumbuhan</button>
         <table class="table table-striped">
             <thead>
                 <tr>
                 <th scope="col">#</th>
                 <th scope="col">Gambar</th>
                 <th scope="col">Judul</th>
-                <th scope="col">Daerah</th>
-                <th scope="col">Penulis</th>
                 <th scope="col">Konten</th>
                 <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php $i = 1; ?>
-	            <?php foreach ($berita as $brt => $value) : ?>
+	            <?php foreach ($tumbuhan as $brt => $value) : ?>
                     <tr>
                         <th scope="row"><?= $i ?></th>
                         <td><img src="images/<?= $value['gambar'] ?>" style="height:50px; width: 50px;" class="rounded-sm rounded-circle mx-auto" alt="..."></td>
                         <td><?= $value['judul'] ?></td>
-                        <td><?= $value['daerah'] ?></td>
-                        <td><?= $value['penulis'] ?></td>
                         <td><?= limitKata($value['konten']) ?></td>
                         <td>
-                            <button class="btn btn-sm btn-success"><a href="edit-berita.php?id=<?= $value["id"]; ?>">Edit</a></button>
-                            <button class="btn btn-sm btn-danger"><a href="hapus-berita.php?id=<?= $value["id"]; ?>">Hapus</a></button>
+                            <button class="btn btn-sm btn-success"><a href="edit-tumbuhan.php?id=<?= $value["id"]; ?>">Edit</a></button>
+                            <button class="btn btn-sm btn-danger"><a href="hapus-tumbuhan.php?id=<?= $value["id"]; ?>">Hapus</a></button>
                         </td>
                     </tr>
                     <?php $i++; ?>
@@ -109,7 +100,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Berita</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Tumbuhan</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -120,30 +111,16 @@
                 <label for="judul">Judul</label>
                 <input type="text" name="judul" class="form-control" id="judul">
             </div>
-            <div class="form-group">
-                <label for="Penulis">Penulis</label>
-                <input type="text" name="penulis" class="form-control" id="Penulis">
-            </div>
-            <div class="form-group">
-                <label for="daerah">Daerah</label>
-                <select name="daerah" class="form-control" id="daerah">
-                    <?php foreach($daerah as $dr => $drh) : ?>
-                        <option value="<?= $drh['id']?>"><?= $drh['daerah'] ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
             <div class="custom-file mb-3 mt-3">
-                <input type="file" name="gambar">
-                <!-- <label class="custom-file-label" for="gambar">Choose file...</label> -->
+                <input type="file" name="gambar" required>
             </div>
             <div class="form-group">
                 <label for="konten">Konten</label>
                 <textarea class="form-control ckeditor" id="contentupload" name="konten" id="konten" rows="3"></textarea>
-
             </div>
 
             <div class="container">
-                <button type="submit" name="tambahberita" class="btn btn-primary float-right ml-1">Simpan</button>
+                <button type="submit" name="tambahtumbuhan" class="btn btn-primary float-right ml-1">Simpan</button>
                 <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Tutup</button>
             </div>
         </form>

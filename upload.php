@@ -14,7 +14,7 @@ if(isset($_FILES['upload']['name'])){
 
  chmod('upload', 0777);
 
- $allowed_extension = array("jpg", "gif", "png");
+ $allowed_extension = array("jpg", "gif", "png", "jpeg");
 
  if(in_array($extension, $allowed_extension))
 
@@ -24,7 +24,7 @@ if(isset($_FILES['upload']['name'])){
 
   $function_number = $_GET['CKEditorFuncNum'];
 
-  $url = 'http://192.168.43.197:8888/Projek/Historas/images/' . $new_image_name;
+  $url = 'http://192.168.100.12:8888/Froti/images/' . $new_image_name;
 
   $message = '';
 

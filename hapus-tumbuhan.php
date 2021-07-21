@@ -4,12 +4,12 @@ require 'functions.php';
 
 $id = $_GET["id"];
 
-if (hapusDaerah($id) > 0) {
+if (hapusTumbuhan($id) > 0) {
 	echo
 	"
 		<script>
 			alert('Data berhasil dihapus!');
-			document.location.href = 'daerah.php';
+			document.location.href = 'index.php';
 		</script>
 	";
 }else {
@@ -17,7 +17,7 @@ if (hapusDaerah($id) > 0) {
 	"
 		<script>
 			alert('Data gagal dihapus!');
-			document.location.href = 'daerah.php';
+			document.location.href = 'index.php';
 		</script>
 	";
 }

@@ -34,13 +34,11 @@ function query($query){
 	return $rows;
 }
 
-function tambahBerita($data){
+function tambahTumbuhan($data){
 	global $conn;
 
 	$judul = htmlspecialchars($data["judul"]);
 	$konten = $data["konten"];
-	$penulis = htmlspecialchars($data["penulis"]);
-	$daerah = htmlspecialchars($data["daerah"]);
 	$gambar = htmlspecialchars($data["gambar"]);
 
 	$gambar = upload();
@@ -48,7 +46,7 @@ function tambahBerita($data){
 		return false;
 	}
 
-	$query = "INSERT INTO berita VALUES (null, '$judul', '$konten', '$penulis', '$daerah', '$gambar') ";
+	$query = "INSERT INTO tumbuhan VALUES (null, '$judul', '$konten', '$gambar') ";
 
 	mysqli_query($conn, $query);
 
@@ -105,79 +103,37 @@ function upload(){
 	return $namaFileBaru;
 }
 
-function hapusBerita($id){
+function hapusTumbuhan($id){
 	global $conn;
 
-	mysqli_query($conn, "DELETE FROM berita WHERE id = '$id' ");
+	mysqli_query($conn, "DELETE FROM tumbuhan WHERE id = '$id' ");
 
 	return mysqli_affected_rows($conn);
 }
 
-function ubahBerita($data){
+function ubahTumbuhan($data){
 	global $conn;
 
 	$id = $_GET["id"];
     $judul = $_POST["judul"];
-    $penulis = $_POST["penulis"];
-    $id_daerah = $_POST['id_daerah'];
 	$konten = $_POST['konten'];
 	$gambar = $_FILES['gambar'];
 	
 	$gambar = upload();
 	$file = explode(".",$gambar);
 	$namaFile = $gambar;
-	$result = mysqli_query($conn, "SELECT * FROM berita WHERE id=$id");
+	$result = mysqli_query($conn, "SELECT * FROM tumbuhan WHERE id=$id");
 	$row = mysqli_fetch_assoc($result);
 	if ($file[1] == null) {
 		$namaFile = $row['gambar'];
 		
 	}
 
-	$query = "UPDATE berita SET judul = '$judul', konten = '$konten', penulis = '$penulis', id_daerah = '$id_daerah', gambar = '$namaFile' WHERE id = '$id' ";
+	$query = "UPDATE tumbuhan SET judul = '$judul', konten = '$konten', gambar = '$namaFile' WHERE id = '$id' ";
 	$ubah = mysqli_query($conn, $query);
 
 	return mysqli_affected_rows($ubah);
 	
 }
-
-function tambahDaerah($data){
-	global $conn;
-
-	$daerah = htmlspecialchars($data["daerah"]);
-
-	$query = "INSERT INTO daerah VALUES (null, '$daerah') ";
-
-	mysqli_query($conn, $query);
-
-	return(mysqli_affected_rows($conn));
-
-}
-
-function hapusDaerah($id){
-	global $conn;
-
-	mysqli_query($conn, "DELETE FROM daerah WHERE id = '$id' ");
-
-	return mysqli_affected_rows($conn);
-}
-
-function ubahDaerah($data){
-	global $conn;
-
-	$id = $data["id"];
-	$daerah = htmlspecialchars($data["daerah"]);
-
-	$query = "UPDATE daerah SET daerah = '$daerah' WHERE id = '$id' ";
-	$ubah = mysqli_query($conn, $query);
-
-	return mysqli_affected_rows($ubah);
-	
-}
-
-
-
-
-
-
 
 ?>

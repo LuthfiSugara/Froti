@@ -1,6 +1,6 @@
 <?php
 	$server = 'localhost';
-	$dbname = 'historas';
+	$dbname = 'froti';
 	$dbuser = 'root';
 	$dbpass = 'root';
 ?>
